@@ -3,7 +3,11 @@ const Sequelize = require('sequelize');
 module.exports = class Post extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
-            nickname: {
+            title: {
+                type: Sequelize.STRING(100),
+                allowNull: true
+            },
+            content: {
                 type: Sequelize.STRING(100),
                 allowNull: true
             }
