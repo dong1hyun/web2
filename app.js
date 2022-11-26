@@ -9,11 +9,16 @@ const session = require('express-session');
 const nunjucks = require('nunjucks');
 const { sequelize } = require('./models');
 
+const passport = require('passport');
+const passportConfig = require('./passport');
+
+const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const commentRouter = require('./routes/comment');
 const indexRouter = require('./routes');
 
 dotenv.config();
+passportConfig();  //패스포트 설정
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
@@ -46,6 +51,10 @@ app.use(
     })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/comment', commentRouter);
 app.use('/', indexRouter);
@@ -53,11 +62,11 @@ app.use('/', indexRouter);
 app.use((req, res, next) => {
     res.locals.title = require('./package.json').name;
     res.locals.port = app.get('port');
+    res.locals.user = req.user;
     res.render('index');
 });
 
 app.use((err, req, res, next) => {
-    res.sendFile()
     console.error(err);
     res.status(500).send(err);
 });

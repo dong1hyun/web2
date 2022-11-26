@@ -1,21 +1,13 @@
 {
-  "name": "web2_project",
-  "version": "0.0.1",
+  "name": "step4",
+  "version": "1.0.0",
+  "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app"
+    "start": "nodemon"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dong1hyun/web2.git"
-  },
-  "author": "임동현, 나청송",
+  "author": "Prof. Wonvin Kim, Computer Software, Korean Bibie University",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dong1hyun/web2/issues"
-  },
-  "homepage": "https://github.com/dong1hyun/web2#readme",
-  "description": "",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
@@ -23,12 +15,15 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "morgan": "^1.10.0",
-    "mysql2": "^2.3.3",
+    "mysql2": "^2.2.5",
     "nunjucks": "^3.2.2",
-    "sequelize": "^6.25.8",
-    "sequelize-cli": "^6.5.2"
+    "passport": "^0.4.1",
+    "passport-kakao": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.6"
   }
 }
