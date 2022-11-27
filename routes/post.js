@@ -37,11 +37,11 @@ router.get('/:id', async (req, res, next) => {
             ],
             where: {id: req.params.id}
         });
-        res.locals.authority = req?.user?.id == post?.User?.id;
-        res.locals.title = post.title;
-        res.locals.nickname = post.User.nickname
-        res.locals.content = post.content;
-        res.locals.id = post.id;
+        res.locals.authority = req?.user?.id == post?.User?.id; //현재 로그인 돼있는 아이디와 게시글 작성아이디가 같으면 권한이 있음
+        res.locals.title = post.title; //게시글 제목
+        res.locals.nickname = post.User.nickname //닉네임
+        res.locals.content = post.content; //게시글 내용
+        res.locals.id = post.id; //게시글 번호
         res.locals.port = 5000;
         res.render('postContent');
     } catch (err) {

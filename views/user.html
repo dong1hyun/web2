@@ -28,24 +28,17 @@
     </p>
 
     <p>
-        사용자 정보 삭제<br>
-        {% for userId in users %}
-            <a href="http://localhost:{{port}}/user/delete/{{userId}}">http://localhost:{{port}}/user/delete/{{userId}}</a><br>
-        {% endfor %}
-    </p>
-
-    <p>
-        사용자 포스트 정보<br>
-        {% for userId in users %}
-            <a href="http://localhost:{{port}}/user/{{userId}}/comments">http://localhost:{{port}}/user/{{userId}}/comments</a><br>
-        {% endfor %}
-    </p>
-
-    <p>
         사용자 정보<br>
         {% for userId in users %}
-            <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br>
+            <a href="http://localhost:{{port}}/user/{{userId}}">{{userId}}</a><br>
         {% endfor %}
+    </p>
+    
+    <p>
+        {% if curUser %}
+        나의 정보 삭제<br>
+        <a href="http://localhost:{{port}}/user/delete/{{curUser}}">{{curUser}}</a><br>
+        {% endif %}
     </p>
 </body>
 
