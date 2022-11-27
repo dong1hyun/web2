@@ -32,34 +32,25 @@
     </div>
     
     <br>
-    <p>
+    <div>
         <a href="http://localhost:{{port}}/post"><h3>글쓰기</h3></a>
-    </p>
+    </div>
     <br>
-    <p>
-        <h3>나의글보기</h3>
-        {% for v in myPosts %}
-            <a href="http://localhost:{{port}}/post/myPosts/{{v[1]}}">{{v[0]}}</a><br>
-        {% endfor %}
-    </p>
-    <br>
-    <p>
-        <h3>전체글보기</h3>
-        {% for v in posts %}
-            <a href="http://localhost:{{port}}/post/myPosts/{{v[1]}}">{{v[0]}}-{{v[2]}}</a><br>
-        {% endfor %}
-    </p>
-    <p>
-        Info page<br>
-        <a href="http://localhost:{{port}}/users">http://localhost:{{port}}/users</a><br>
-        <a href="http://localhost:{{port}}/comments">http://localhost:{{port}}/comments</a><br>
-        <a href="http://localhost:{{port}}/data">http://localhost:{{port}}/data</a>
-    </p>
-
-    <p>
-        Comment page<br>
-        <a href="http://localhost:{{port}}/comment">http://localhost:{{port}}/comment</a><br>
-    </p>
+    <div>
+        <p>
+            <h3>나의글보기</h3>
+            {% for v in myPosts %}
+                <a href="http://localhost:{{port}}/post/{{v[1]}}">{{v[0]}}</a><br>
+            {% endfor %}
+        </p>
+        <br>
+        <p>
+            <h3>전체글보기</h3>
+            {% for v in posts %}
+                <a href="http://localhost:{{port}}/post/{{v[1]}}">{{v[0]}}   (작성자: {{v[2]}})</a><br>
+            {% endfor %}
+        </p>
+    </div>
 </body>
 
 </html>

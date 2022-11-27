@@ -84,7 +84,6 @@ app.use(async (req, res, next) => {
                 ],
                 where: {id: req?.user?.id}
             }); 
-            console.log(user.Posts);
             res.locals.myPosts = user.Posts.map(v => [v?.title, v?.id]);
         }
         
