@@ -11,11 +11,6 @@ module.exports = class Post extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true
             },
-            // postNum: {
-            //     type: Sequelize.STRING(100),
-            //     allowNull: false,
-            //     primaryKey: true
-            // }
         }, {
             sequelize,
             timestamps: false,
@@ -30,6 +25,6 @@ module.exports = class Post extends Sequelize.Model {
 
     static associate(db) {
         db.Post.belongsTo(db.User, { foreignKey: 'userId', targetKey: 'id' });
-        // db.Post.hasOne(db.Comment, { foreignKey: 'postId', sourceKey: 'postNum' });
+        db.Post.hasMany(db.Comment, { foreignKey: 'postId', sourceKey: 'id' });
     }
 };

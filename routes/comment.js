@@ -7,25 +7,20 @@ const { isLoggedIn } = require('./helpers');
 
 const router = express.Router();
 
-router.route('/')
-    .get(isLoggedIn, (req, res) => {
-        res.locals.title = require('../package.json').name;
-        // res.locals.userId = req.user.id;
-        res.render('comment');
-    })
-    .post(async (req, res, next) => {
-        const { comment } = req.body;
+    router.post('/commenting/:id', isLoggedIn, async (req, res, next) => {
+        const { comments } = req.body;
         const postId = req.params.id;
-
         try {
-            await Comment.create({ postId, comment });
-            res.redirect('/');
+            await Comment.create({
+                comments,
+                userId: req.user.id,
+                postId
+            });
+            res.redirect(`/post/${postId}`);
         } catch (err) {
             console.error(err);
             next(err);
         }
-    });
-
-
+    })
 
 module.exports = router;
