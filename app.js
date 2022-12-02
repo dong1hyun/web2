@@ -87,7 +87,7 @@ app.use(async (req, res, next) => {
             res.locals.myPosts = user.Posts.map(v => [v?.title, v?.id]);
         }
         
-        res.locals.posts = posts.map(v => [v?.title, v?.id, v?.User.nickname]);
+        res.locals.posts = posts.map(v => [v?.title, v?.id, v?.User?.nickname]);
     } catch (err) {
         console.error(err);
         next(err);
