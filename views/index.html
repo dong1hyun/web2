@@ -49,6 +49,12 @@
             {% for v in posts %}
                 <a href="http://localhost:{{port}}/post/{{v[1]}}">{{v[0]}}   (작성자: {{v[2]}})</a><br>
             {% endfor %}
+
+            <br>
+            <form id="form" action="/post/hashtag" method="get">
+                해시태그 검색: <input type="text" name="hashtag" placeholder="태그 검색">
+                <button type="submit">검색</button>
+            </form>
         </p>
     </div>
 </body>

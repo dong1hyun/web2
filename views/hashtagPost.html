@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    {% for v in posts %}
+    <a href="http://localhost:{{port}}/post/{{v[1]}}">{{v[0]}} (작성자: {{v[2]}})</a><br>
+    {% endfor %}
+</body>
+
+</html>

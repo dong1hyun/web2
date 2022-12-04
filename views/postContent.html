@@ -6,12 +6,9 @@
 </head>
 <body>
     {{title}} - {{nickname}}<br><br><br>
-    {{content}}
-    {% if Like %}
-    <br><br><a href="http://localhost:{{port}}/post/unLike/{{id}}">👍🏻좋아요취소 {{like}}</a><br>    
-    {% else %}
-    <br><br><a href="http://localhost:{{port}}/post/like/{{id}}">👍🏻좋아요 {{like}}</a><br>
-    {% endif %}
+    {{content}}<br><br>
+    <a href="http://localhost:{{port}}/post/hashtag/{{hashtag}}"></a>
+    <a href="http://localhost:{{port}}/post/like/{{id}}">👍🏻좋아요 {{like}}</a><br>
     ---------------------------------------------------------<br><br>
     {% if authority %}
     <form id= "form" action="/post/update/{{id}}" method="post">
@@ -21,4 +18,4 @@
     <a href="http://localhost:{{port}}/post/delete/{{id}}">글 삭제</a>
     {% endif %}
 </body>
-</html> 
+</html>
