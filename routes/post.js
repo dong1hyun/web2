@@ -27,11 +27,11 @@ router.post('/posting', async (req, res, next) => {
             userId: req.user.id
         });
 
-        const hashtags = req.body.content.match(/#[^\s#]*/g);
+        const hashtags = req.body.content.match(/#[^\s#]*/g); //정규표현식
         if (hashtags) {
             const result = await Promise.all(
                 hashtags.map(tag => { //모델들이 들어간 배열을 만듦
-                    return Hashtag.findOrCreate({ //모델에서 입력한 해시태그가 존재하면 찾아서 반환하고, 없으면 새로 만듬
+                    return Hashtag.findOrCreate({ //모델에서 입력한 해시태그가 존재하면 찾아서 반환하고, 없으면 새로 만듦
                         where: { hashtag: tag.slice(1).toLowerCase() },
                     })
                 }),
