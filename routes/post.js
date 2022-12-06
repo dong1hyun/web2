@@ -2,6 +2,7 @@ const express = require('express');
 const Post = require('../models/post');
 const User = require('../models/user');
 const Hashtag = require('../models/hashtag');
+const Comment = require('../models/comment');
 
 const { isLoggedIn } = require('./helpers');
 const { renderString } = require('nunjucks');
@@ -78,6 +79,15 @@ router.get('/:id', async (req, res, next) => {
             ],
             where: { id: req.params.id }
         });
+        const comment = await Comment.findAll({
+            include: [
+                {
+                    model: User,
+                    attributes: ['nickname']
+                }
+            ],
+            where: { postId: req.params.id } // 페이지 넘버
+        });
         res.locals.authority = req?.user?.id == post?.User?.id; //현재 로그인 돼있는 아이디와 게시글 작성아이디가 같으면 권한이 있음
         res.locals.title = post.title; //게시글 제목
         res.locals.nickname = post.User.nickname //닉네임
@@ -86,7 +96,7 @@ router.get('/:id', async (req, res, next) => {
         res.locals.like = post.like;
         res.locals.port = 5000;
         console.log(post.getHashtags);
-        // res.locals.hashtags = post.getHashtags;
+        res.locals.comments = comment.map(v => [v.comments, v.User.nickname, v.id, req?.user?.id == v.userId]);
         res.render('postContent');
     } catch (err) {
         console.error(err);
@@ -143,5 +153,22 @@ router.get('/delete/:id', async (req, res, next) => {
         next(err);
     }
 })
+
+router.post('/comments/:id', async (req, res, next) => {
+    try {
+        const user = await User.findOne({
+            where: { id: req.params.id }
+        });
+
+        if (user) {
+            const comments = await user.getComments();
+            res.json(comments);
+        } else
+            next(`There is no user with ${req.params.id}.`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
 
 module.exports = router;

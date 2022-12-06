@@ -15,6 +15,7 @@ router.route('/')
             res.locals.port = process.env.PORT;
             res.locals.users = users.map(v => v.id);
             res.locals.curUser = req?.user?.id;
+            res.locals.isLoggedIn = !req?.user?.id;
             res.render('user');
         } catch (err) {
             console.error(err);
@@ -74,23 +75,6 @@ router.get('/delete/:id', async (req, res, next) => {
 
         if (result) res.redirect('/');
         else next('Not deleted!')
-    } catch (err) {
-        console.error(err);
-        next(err);
-    }
-});
-
-router.get('/:id/comments', async (req, res, next) => {
-    try {
-        const user = await User.findOne({
-            where: { id: req.params.id }
-        });
-
-        if (user) {
-            const comments = await user.getComments();
-            res.json(comments);
-        } else
-            next(`There is no user with ${req.params.id}.`);
     } catch (err) {
         console.error(err);
         next(err);
