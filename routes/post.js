@@ -154,21 +154,4 @@ router.get('/delete/:id', async (req, res, next) => {
     }
 })
 
-router.post('/comments/:id', async (req, res, next) => {
-    try {
-        const user = await User.findOne({
-            where: { id: req.params.id }
-        });
-
-        if (user) {
-            const comments = await user.getComments();
-            res.json(comments);
-        } else
-            next(`There is no user with ${req.params.id}.`);
-    } catch (err) {
-        console.error(err);
-        next(err);
-    }
-});
-
 module.exports = router;
