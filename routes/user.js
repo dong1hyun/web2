@@ -15,6 +15,7 @@ router.route('/')
             res.locals.port = process.env.PORT;
             res.locals.users = users.map(v => v.id);
             res.locals.curUser = req?.user?.id;
+            res.locals.isLoggedIn = !req?.user?.id;
             res.render('user');
         } catch (err) {
             console.error(err);

@@ -28,8 +28,6 @@ router.post('/posting', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res, next) => {
-    console.log(req.params.id);
-
     try {
         const post = await Post.findOne({
             include: [
@@ -56,9 +54,7 @@ router.get('/:id', async (req, res, next) => {
         res.locals.content = post.content; //게시글 내용
         res.locals.id = post.id; //게시글 번호
         res.locals.port = 5000;
-        console.log(comment);
-
-        res.locals.comments = comment.map(v => [v.comments, v.User.nickname, v.id]);
+        res.locals.comments = comment.map(v => [v.comments, v.User.nickname, v.id, req?.user?.id == v.userId]);
         res.render('postContent');
     } catch (err) {
         console.error(err);

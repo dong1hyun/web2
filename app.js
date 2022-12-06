@@ -66,6 +66,7 @@ app.use('/', indexRouter);
 
 app.use(async (req, res, next) => {
     try {
+        console.log("app");
         const posts = await Post.findAll({ //모든 게시글 정보를 불러옴(유저의 닉네임 정보도 포함)
             include: [
                 {

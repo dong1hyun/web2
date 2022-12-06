@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post('/commenting/:id', isLoggedIn, async (req, res, next) => {
     const { comments } = req.body;
+
+    if (!comments) return next('댓글 내용을 입력하세요.');
     const postId = req.params.id;
     try {
         await Comment.create({
@@ -23,15 +25,18 @@ router.post('/commenting/:id', isLoggedIn, async (req, res, next) => {
     }
 });
 
-router.post('/update/:id', async (req, res, next) => {
+router.post('/update/:id/:cid', async (req, res, next) => {
     const { comments } = req.body;
+    if (!comments) return next('댓글 내용을 입력하세요.');
+    
     try {
-        const result = await Post.update({
-            content
+        console.log("update");
+        const result = await Comment.update({
+            comments
         }, {
-            where: { id: req.params.id }
+            where: { id: req.params.cid }
         });
-        if (result) res.redirect('/');
+        if (result) res.redirect(`/post/${req.params.id}`);
         else next('Not updated!')
     } catch (err) {
         console.error(err);
@@ -39,13 +44,13 @@ router.post('/update/:id', async (req, res, next) => {
     }
 });
 
-router.get('/delete/:id', async (req, res, next) => {
+router.get('/delete/:id/:cid', async (req, res, next) => {
     try {
         const result = await Comment.destroy({
-            where: { id: req.params.id }
+            where: { id: req.params.cid }
         });
         
-        if (result) res.redirect('/post/');
+        if (result) res.redirect(`/post/${req.params.id}`);
         else next('Not deleted!')
     } catch (err) {
         console.error(err);
