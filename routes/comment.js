@@ -41,11 +41,11 @@ router.post('/update/:id', async (req, res, next) => {
 
 router.get('/delete/:id', async (req, res, next) => {
     try {
-        const result = await Post.destroy({
-            where: { id: comment }
+        const result = await Comment.destroy({
+            where: { id: req.params.id }
         });
-
-        if (result) res.redirect('/');
+        
+        if (result) res.redirect('/post/');
         else next('Not deleted!')
     } catch (err) {
         console.error(err);

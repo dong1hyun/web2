@@ -29,9 +29,9 @@
     
     <h3>댓글</h3>
         {% for v in comments %}
-        {{v[0]}}   (작성자: {{v[1]}})<br>
+        {{v[0]}}   (작성자: {{v[1]}}) <a href="http://localhost:{{port}}/post/delete/{{v2}}"><button type="submit">댓글 삭제</a><br> 
         {% if authority %}
-        <a href="http://localhost:{{port}}/post/delete/{{id}}"><button type="submit">댓글 삭제</a><br>
+        <br>
         
         {% endif %}
         {% endfor %}

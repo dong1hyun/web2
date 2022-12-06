@@ -58,7 +58,7 @@ router.get('/:id', async (req, res, next) => {
         res.locals.port = 5000;
         console.log(comment);
 
-        res.locals.comments = comment.map(v => [v.comments, v.User.nickname]);
+        res.locals.comments = comment.map(v => [v.comments, v.User.nickname, v.id]);
         res.render('postContent');
     } catch (err) {
         console.error(err);
