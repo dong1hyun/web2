@@ -25,6 +25,7 @@ router.route('/')
     .post(async (req, res, next) => {
         const { id, password, name, nickname } = req.body;
 
+        if (!id) return next('아이디를 입력하세요.');
         if (!password) return next('비밀번호를 입력하세요.');
 
         const user = await User.findOne({ where: { id } });
@@ -51,6 +52,9 @@ router.route('/')
 
 router.post('/update', async (req, res, next) => {
     const {password, nickname} = req.body;
+
+    if (!password) return next('비밀번호를 입력하세요.');
+
     try {
         const result = await User.update({
             password,
