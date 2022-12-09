@@ -18,7 +18,11 @@ router.post('/commenting/:id', isLoggedIn, async (req, res, next) => {
             userId: req.user.id,
             postId
         });
-        res.redirect(`/post/${postId}`);
+        res.send({
+            result: 'success',
+            comments,
+            error: null
+        });
     } catch (err) {
         console.error(err);
         next(err);
@@ -36,7 +40,13 @@ router.post('/update/:id/:cid', async (req, res, next) => {
         }, {
             where: { id: req.params.cid }
         });
-        if (result) res.redirect(`/post/${req.params.id}`);
+        if (result) {
+            res.send({
+                result: 'success',
+                comments,
+                error: null
+            });
+        }
         else next('Not updated!')
     } catch (err) {
         console.error(err);
@@ -50,7 +60,12 @@ router.get('/delete/:id/:cid', async (req, res, next) => {
             where: { id: req.params.cid }
         });
         
-        if (result) res.redirect(`/post/${req.params.id}`);
+        if (result) {
+            res.send({
+                result: 'success',
+                error: null
+            });
+        }
         else next('Not deleted!')
     } catch (err) {
         console.error(err);

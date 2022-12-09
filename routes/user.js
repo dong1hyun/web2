@@ -43,7 +43,13 @@ router.route('/')
                 nickname
             });
 
-            res.redirect('/');
+            res.send({
+                result: 'success',
+                id,
+                name,
+                nickname,
+                error: null
+            });
         } catch (err) {
             console.error(err);
             next(err);
@@ -56,14 +62,23 @@ router.post('/update', async (req, res, next) => {
     if (!password) return next('비밀번호를 입력하세요.');
 
     try {
+        const hash = await bcrypt.hash(password, 12);
+
         const result = await User.update({
-            password,
+            password: hash,
             nickname
         }, {
             where: { id: req.body.id }
         });
 
-        if (result) res.redirect('/');
+        if (result) {
+            res.send({
+                result: 'success',
+                id,
+                nickname,
+                error: null
+            });
+        }
         else next('Not updated!')
     } catch (err) {
         console.error(err);
@@ -77,7 +92,12 @@ router.get('/delete/:id', async (req, res, next) => {
             where: { id: req.params.id }
         });
 
-        if (result) res.redirect('/');
+        if (result) {
+            res.send({
+                result: 'success',
+                error: null
+            });
+        }
         else next('Not deleted!')
     } catch (err) {
         console.error(err);

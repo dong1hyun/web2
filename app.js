@@ -16,8 +16,6 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const commentRouter = require('./routes/comment');
 const postRouter = require('./routes/post');
-const indexRouter = require('./routes');
-
 
 const Post = require('./models/post');
 
@@ -62,7 +60,6 @@ app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/comment', commentRouter);
 app.use('/post', postRouter);
-app.use('/', indexRouter);
 
 app.use(async (req, res, next) => {
     try {

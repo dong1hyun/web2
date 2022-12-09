@@ -5,7 +5,6 @@ const Hashtag = require('../models/hashtag');
 const Comment = require('../models/comment');
 
 const { isLoggedIn } = require('./helpers');
-const { renderString } = require('nunjucks');
 
 const router = express.Router();
 
@@ -40,7 +39,12 @@ router.post('/posting', async (req, res, next) => {
             await post.addHashtags(result.map(r => r[0]));
         }
 
-        res.redirect('/');
+        res.send({
+            result: 'success',
+            title,
+            content,
+            error: null
+        });
     } catch (err) {
         console.error(err);
         next(err);
@@ -61,7 +65,12 @@ router.get('/hashtag', async (req, res, next) => {
 
         res.locals.port = 5000;
         res.locals.posts = posts.map(v => [v?.title, v?.id, v?.User?.nickname]);
-        res.render('hashtagPost');
+        if(posts.length == 0) {
+            res.send("해당 해시태그 포스트는 없습니다.");
+        }else{
+            res.render('hashtagPost');
+        }
+        
     } catch (error) {
         console.error(error);
         return next(error);
@@ -117,7 +126,7 @@ router.get('/like/:id', isLoggedIn, async (req, res, next) => {
         }, {
             where: { id: req.params.id }
         }),
-            res.redirect(`/post/${req.params.id}`);
+        res.redirect(`/post/${req.params.id}`);
     } catch (err) {
         console.error(err);
         next(err);
@@ -126,13 +135,22 @@ router.get('/like/:id', isLoggedIn, async (req, res, next) => {
 
 router.post('/update/:id', async (req, res, next) => {
     const { content } = req.body;
+    
+    if (!content) return next('내용을 입력하세요.');
+
     try {
         const result = await Post.update({
             content
         }, {
             where: { id: req.params.id }
         });
-        if (result) res.redirect('/');
+        if (result) {
+            res.send({
+                result: 'success',
+                content,
+                error: null
+            });
+        }
         else next('Not updated!')
     } catch (err) {
         console.error(err);
@@ -146,7 +164,12 @@ router.get('/delete/:id', async (req, res, next) => {
             where: { id: req.params.id }
         });
 
-        if (result) res.redirect('/');
+        if (result) {
+            res.send({
+                result: 'success',
+                error: null
+            });
+        }
         else next('Not deleted!')
     } catch (err) {
         console.error(err);
