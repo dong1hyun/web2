@@ -57,7 +57,7 @@ router.route('/')
     });
 
 router.post('/update', async (req, res, next) => {
-    const {password, nickname} = req.body;
+    const {id, password, nickname} = req.body;
 
     if (!password) return next('비밀번호를 입력하세요.');
 
